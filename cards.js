@@ -4112,6 +4112,23 @@ window.CARDS_DATA ={
     "image_style": "photo",
     "image_is_related_art": false
   },
+   {
+    "id": "empeldown:empeldown",
+    "name": "Empeldown",
+    "source_name": "Empeldown",
+    "category": "empeldown",
+    "type": "building",
+    "ability": "+1 hp for all navy/empeldown characters ,+3hp +atk for magellan , -1hp for all pirates",
+    "ability_type": null,
+    "health": null,
+    "damage": null,
+    "target": null,
+    "tags": [],
+    "image_url": "https://static.wikia.nocookie.net/onepiece/images/4/43/Impel_Down_Building.png/revision/latest/scale-to-width-down/1000?cb=20121215232202",
+    "image_source": null,
+    "image_style": "photo",
+    "image_is_related_art": false
+  },
   {
     "id": "empeldown:magellan",
     "name": "Magellan",
