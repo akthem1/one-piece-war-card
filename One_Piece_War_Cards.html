@@ -34,10 +34,15 @@
     .section-head h2 { font-family:Georgia,serif; font-weight:normal; font-size:24px; margin:0; letter-spacing:-.02em; }
     .section-head p { margin:0; color:#737d83; font-size:12px; }
     .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(245px,1fr)); gap:19px; align-items:stretch; }
-    .card { --faction:#657e95; min-width:0; min-height:435px; display:flex; flex-direction:column; padding:9px; background:linear-gradient(158deg,color-mix(in srgb,var(--faction) 85%,white),color-mix(in srgb,var(--faction) 88%,#1f2030)); border:1px solid color-mix(in srgb,var(--faction) 70%,#1b2432); border-radius:12px; box-shadow:0 5px 0 rgba(30,34,40,.12),0 12px 22px rgba(34,40,44,.09); break-inside:avoid; }
-    .card-head { min-height:57px; padding:4px 6px 8px; display:flex; flex-direction:column; justify-content:center; }
+    .card { --faction:#657e95; position:relative; min-width:0; min-height:435px; display:flex; flex-direction:column; padding:9px; background:linear-gradient(158deg,color-mix(in srgb,var(--faction) 85%,white),color-mix(in srgb,var(--faction) 88%,#1f2030)); border:1px solid color-mix(in srgb,var(--faction) 70%,#1b2432); border-radius:12px; box-shadow:0 5px 0 rgba(30,34,40,.12),0 12px 22px rgba(34,40,44,.09); break-inside:avoid; }
+    .card-head { min-height:57px; padding:4px 6px 8px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .card-head-text { min-width:0; }
     .card-title { margin:0; color:white; font-family:Georgia,serif; font-size:20px; font-weight:700; line-height:1.12; text-shadow:0 1px 2px rgba(0,0,0,.28); overflow-wrap:anywhere; }
     .card-category { color:rgba(255,255,255,.88); text-transform:uppercase; font-size:9px; font-weight:850; letter-spacing:.14em; margin-top:4px; }
+
+    /* Rank badge (top-left) */
+    .rank { flex-shrink:0; font-family:Georgia,serif; font-size:38px; font-weight:900; line-height:1; letter-spacing:-.03em; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,.45); }
+
     .art { height:174px; display:block; position:relative; border:2px solid rgba(255,255,255,.75); overflow:hidden; border-radius:5px; background:linear-gradient(135deg,#d8d0c3,#a8abae); text-decoration:none; }
     .art img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; }
     .art img.tcg-art { object-position:50% 27%; }
@@ -62,7 +67,7 @@
     .error { display:none; margin:12px 0 0; color:#9e3030; font-size:13px; }
     .note { color:#778087; font-size:12px; line-height:1.6; margin:29px 0 0; }
     @media (max-width:650px) { .banner-inner { padding:25px 19px; min-height:145px; } main { padding:20px 17px 45px; } .counter { min-width:78px; padding-left:15px; } .counter strong { font-size:27px; } .grid { grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:14px; } .section-head p { display:none; } }
-    @media (max-width:460px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .card { min-height:360px; padding:6px; border-radius:9px; } .card-head { min-height:51px; padding:3px 4px 6px; } .card-title { font-size:16px; } .art { height:120px; } .card-body { padding:7px; margin-top:6px; } .ability { font-size:11px; } .ability-label { margin-top:7px; } .stat-value { font-size:17px; } .stat-icon { font-size:17px; } .stat { min-width:50px; gap:4px; } .toolbar .control.search { flex-basis:100%; } .toolbar .control:not(.search) { flex:1 1 120px; } }
+    @media (max-width:460px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .card { min-height:360px; padding:6px; border-radius:9px; } .card-head { min-height:51px; padding:3px 4px 6px; } .card-title { font-size:16px; } .rank { font-size:28px; } .art { height:120px; } .card-body { padding:7px; margin-top:6px; } .ability { font-size:11px; } .ability-label { margin-top:7px; } .stat-value { font-size:17px; } .stat-icon { font-size:17px; } .stat { min-width:50px; gap:4px; } .toolbar .control.search { flex-basis:100%; } .toolbar .control:not(.search) { flex:1 1 120px; } }
     @media print {
       @page { size:A4 portrait; margin:5mm; }
       html,body { background:white; }
@@ -73,6 +78,7 @@
       .card-head { min-height:12mm; padding:0 1mm 1mm; }
       .card-title { font-size:12pt; }
       .card-category { font-size:6pt; margin-top:1mm; }
+      .rank { font-size:20pt; text-shadow:none; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
       .art { height:29mm; border-width:1px; border-radius:1mm; }
       .card-body { margin-top:1.5mm; padding:1.5mm 2mm; border-radius:1mm; }
       .type-line { min-height:4mm; padding-bottom:1mm; }
@@ -99,6 +105,7 @@
       <div class="control search"><label for="search">Search cards</label><input type="search" id="search" placeholder="Search a name or ability…" autocomplete="off"></div>
       <div class="control"><label for="category">Category</label><select id="category"><option value="">All categories</option></select></div>
       <div class="control"><label for="type">Card type</label><select id="type"><option value="">All types</option><option value="character">Character</option><option value="tool">Tool</option><option value="building">Building</option></select></div>
+      <div class="control"><label for="rank">Rank</label><select id="rank"><option value="">All ranks</option><option>SSS</option><option>SS</option><option>S+</option><option>S</option><option>A</option><option>B</option><option>C</option><option>D</option><option>F</option></select></div>
       <button type="button" class="btn" id="load">Load JSON</button>
       <input id="json-file" type="file" accept=".json,application/json" hidden>
       <button type="button" class="btn primary" id="print">Print cards</button>
@@ -107,7 +114,7 @@
     <div class="section-head"><h2>The collection</h2><p id="results" aria-live="polite"></p></div>
     <div class="grid" id="grid"></div>
     <p class="empty" id="empty">No cards match these filters. Try another search.</p>
-    <p class="note">Card data loads from cards.js and works offline. Images load from their original websites; when offline they show as empty. Cards without a health or damage value show “—”. Select <strong>Load JSON</strong> to display an edited copy of cards.json.</p>
+    <p class="note">Card data loads from cards.js and works offline. Images load from their original websites; when offline they show as empty. Cards without a health or damage value show “—”. Cards without a rank show no badge. Select <strong>Load JSON</strong> to display an edited copy of cards.json.</p>
   </main>
 
   <!-- Card data: cards.js must start with  window.CARDS_DATA = {...};  -->
@@ -117,10 +124,11 @@
       'use strict';
       let data = null;
       const byId = id => document.getElementById(id);
-      const grid = byId('grid'), search = byId('search'), category = byId('category'), type = byId('type');
+      const grid = byId('grid'), search = byId('search'), category = byId('category'), type = byId('type'), rank = byId('rank');
       const textEl = (tag, cls, text) => { const el=document.createElement(tag); el.className=cls; el.textContent=text; return el; };
       const safeURL = value => { try { const u=new URL(value); return u.protocol==='https:' || u.protocol==='http:' ? u.href : ''; } catch { return ''; } };
       const categoryMap = () => new Map(data.categories.map(c=>[c.id,c]));
+      const rankOf = c => c.rank ? String(c.rank).trim().toUpperCase() : '';
       const filterText = c => [c.name,c.source_name,c.category,c.type,c.ability,c.ability_type,c.target,...(Array.isArray(c.tags)?c.tags:[])].filter(Boolean).join(' ').toLowerCase();
       function setupCategories() {
         category.replaceChildren(new Option('All categories',''));
@@ -138,9 +146,12 @@
         const cat=categories.get(card.category) || {name:card.category || 'Other',color:'#657e95'};
         const root=textEl('article','card','');
         root.style.setProperty('--faction',/^#[0-9a-f]{6}$/i.test(cat.color) ? cat.color : '#657e95');
-        root.setAttribute('aria-label',`${card.name}, ${card.type}, ${cat.name}`);
+        const r=rankOf(card);
+        root.setAttribute('aria-label',`${card.name}, ${card.type}, ${cat.name}${r ? ', rank ' + r : ''}`);
         const head=textEl('header','card-head','');
-        head.append(textEl('h3','card-title',card.name),textEl('div','card-category',cat.name));
+        const headText=textEl('div','card-head-text','');
+        headText.append(textEl('h3','card-title',card.name),textEl('div','card-category',cat.name));
+        head.append(headText);
         const art=textEl('a','art','');
         const source=safeURL(card.image_source) || safeURL(card.image_url);
         if(source){art.href=source;art.target='_blank';art.rel='noopener noreferrer';art.setAttribute('aria-label',`View artwork source for ${card.name}`);}
@@ -167,12 +178,19 @@
         if(card.target) body.append(textEl('p','target',`For: ${card.target}`));
         if(Array.isArray(card.tags) && card.tags.length) body.append(textEl('p','target',`Tags: ${card.tags.join(', ')}`));
         const stats=textEl('footer','card-stats',''); stats.append(stat('HP',card.health,'♥'),stat('DMG',card.damage,'⚔'));
-        root.append(head,art,body,stats); return root;
+        root.append(head,art,body,stats);
+        if(r){
+          const badge=textEl('div','rank',r);
+          badge.dataset.rank=r;
+          badge.setAttribute('aria-label','Rank '+r);
+          head.append(badge);
+        }
+        return root;
       }
       function render() {
         if(!data) return;
         const q=search.value.trim().toLowerCase(), cats=categoryMap();
-        const cards=data.cards.filter(c=>(!q || filterText(c).includes(q)) && (!category.value || c.category===category.value) && (!type.value || c.type===type.value));
+        const cards=data.cards.filter(c=>(!q || filterText(c).includes(q) || rankOf(c).toLowerCase()===q) && (!category.value || c.category===category.value) && (!type.value || c.type===type.value) && (!rank.value || rankOf(c)===rank.value));
         const nodes=document.createDocumentFragment(); cards.forEach(c=>nodes.append(makeCard(c,cats))); grid.replaceChildren(nodes);
         byId('results').textContent=`Showing ${cards.length} of ${data.cards.length} cards`;
         byId('empty').style.display=cards.length ? 'none' : 'block';
@@ -180,7 +198,7 @@
       const showError = msg => { byId('error').textContent=msg; byId('error').style.display='block'; };
       const validate = d => d && Array.isArray(d.cards) && Array.isArray(d.categories) && d.cards.every(c=>c && typeof c.name==='string' && typeof c.type==='string');
 
-      search.addEventListener('input',render); category.addEventListener('change',render); type.addEventListener('change',render);
+      search.addEventListener('input',render); category.addEventListener('change',render); type.addEventListener('change',render); rank.addEventListener('change',render);
 
       byId('print').addEventListener('click',async()=>{
         const button=byId('print'), all=[...grid.querySelectorAll('img')];
@@ -201,7 +219,7 @@
         try {
           const candidate=JSON.parse(await file.text());
           if(!validate(candidate)) throw new Error('Expected categories and cards arrays with card names and types.');
-          data=candidate; search.value=''; type.value=''; setupCategories(); render();
+          data=candidate; search.value=''; type.value=''; rank.value=''; setupCategories(); render();
           byId('error').style.display='none';
         } catch(error) { showError(`Could not load JSON: ${error.message}`); }
         event.target.value='';

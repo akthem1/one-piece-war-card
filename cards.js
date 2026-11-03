@@ -190,6 +190,7 @@ window.CARDS_DATA ={
   "cards": [
     {
       "id": "germa:germa-castle",
+      "rank": "A",
       "name": "Germa Castle",
       "source_name": "germa_castle",
       "category": "germa",
@@ -1816,7 +1817,7 @@ window.CARDS_DATA ={
       "image_is_related_art": true
     },
     {
-      "id": "straw_hats:germa-suit",
+      "id": "straw_hats:germa-suit", 
       "name": "Germa Suit",
       "source_name": "Germa Suit",
       "category": "straw_hats",
