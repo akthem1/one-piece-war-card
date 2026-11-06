@@ -3,100 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>One Piece War Cards</title>
+  <title>One Piece War Cards (70x50mm)</title>
   <style>
     :root { color-scheme: light; --ink:#17283a; --muted:#647181; --paper:#f8f5ee; --line:#dedbd2; }
     * { box-sizing:border-box; }
     body { margin:0; color:var(--ink); background:var(--paper); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
     button, input, select { font:inherit; }
     button { cursor:pointer; }
+    
+    /* Screen Banner & Toolbar Header */
     .banner { color:#f9f6eb; background:radial-gradient(circle at 85% 0%,#30526a 0,transparent 31%),linear-gradient(115deg,#142536,#233a4c); overflow:hidden; }
-    .banner-inner { max-width:1560px; margin:auto; min-height:170px; padding:29px 34px 27px; display:flex; align-items:center; justify-content:space-between; gap:20px; position:relative; }
-    .banner-inner:after { content:'✦'; font-size:160px; line-height:1; color:#fff; opacity:.035; position:absolute; right:20%; top:-37px; pointer-events:none; }
+    .banner-inner { max-width:1560px; margin:auto; min-height:140px; padding:20px 28px; display:flex; align-items:center; justify-content:space-between; gap:20px; position:relative; }
+    .banner-inner:after { content:'✦'; font-size:140px; line-height:1; color:#fff; opacity:.035; position:absolute; right:15%; top:-30px; pointer-events:none; }
     .eyebrow { font-size:10px; font-weight:800; letter-spacing:.23em; color:#eacb83; text-transform:uppercase; }
-    h1 { margin:6px 0 5px; font-family:Georgia,serif; font-size:clamp(28px,4vw,43px); letter-spacing:-.03em; line-height:1; }
-    .subtitle { margin:0; font-size:14px; color:#c5d0d6; line-height:1.5; }
-    .counter { border-left:1px solid #71818a; padding:2px 0 2px 22px; min-width:112px; }
-    .counter strong { display:block; font-family:Georgia,serif; font-size:35px; font-weight:normal; line-height:1; color:#f3cf83; }
-    .counter span { display:block; color:#c8d0d2; margin-top:7px; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
-    main { max-width:1560px; margin:auto; padding:26px 34px 55px; }
-    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:end; padding-bottom:22px; border-bottom:1px solid var(--line); }
-    .control { display:flex; flex-direction:column; gap:5px; min-width:150px; }
-    .control.search { flex:1 1 270px; }
+    h1 { margin:4px 0; font-family:Georgia,serif; font-size:clamp(24px,3.5vw,36px); letter-spacing:-.03em; line-height:1; }
+    .subtitle { margin:0; font-size:13px; color:#c5d0d6; line-height:1.4; }
+    .counter { border-left:1px solid #71818a; padding:2px 0 2px 18px; min-width:100px; }
+    .counter strong { display:block; font-family:Georgia,serif; font-size:30px; font-weight:normal; line-height:1; color:#f3cf83; }
+    .counter span { display:block; color:#c8d0d2; margin-top:5px; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+    
+    main { max-width:1560px; margin:auto; padding:20px 28px 45px; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:end; padding-bottom:18px; border-bottom:1px solid var(--line); }
+    .control { display:flex; flex-direction:column; gap:4px; min-width:130px; }
+    .control.search { flex:1 1 240px; }
     .control label { font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#66737b; }
-    input[type=search],select { height:42px; padding:0 13px; border:1px solid #d8d7d0; border-radius:6px; background:#fffefa; color:#213346; outline:none; }
+    input[type=search],select { height:38px; padding:0 10px; border:1px solid #d8d7d0; border-radius:6px; background:#fffefa; color:#213346; outline:none; font-size:13px; }
     input[type=search]:focus,select:focus,button:focus-visible,a:focus-visible { outline:3px solid #d9ad56; outline-offset:2px; }
-    .btn { height:42px; border:1px solid #253e50; color:#21384c; background:transparent; border-radius:6px; padding:0 15px; font-weight:750; font-size:12px; white-space:nowrap; }
+    .btn { height:38px; border:1px solid #253e50; color:#21384c; background:transparent; border-radius:6px; padding:0 14px; font-weight:750; font-size:12px; white-space:nowrap; }
     .btn.primary { background:#243d50; color:#fff; }
     .btn:hover { transform:translateY(-1px); }
     .btn:active { transform:none; }
-    .section-head { display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin:24px 0 16px; }
-    .section-head h2 { font-family:Georgia,serif; font-weight:normal; font-size:24px; margin:0; letter-spacing:-.02em; }
+    .section-head { display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin:20px 0 14px; }
+    .section-head h2 { font-family:Georgia,serif; font-weight:normal; font-size:22px; margin:0; letter-spacing:-.02em; }
     .section-head p { margin:0; color:#737d83; font-size:12px; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(245px,1fr)); gap:19px; align-items:stretch; }
-    .card { --faction:#657e95; position:relative; min-width:0; min-height:435px; display:flex; flex-direction:column; padding:9px; background:linear-gradient(158deg,color-mix(in srgb,var(--faction) 85%,white),color-mix(in srgb,var(--faction) 88%,#1f2030)); border:1px solid color-mix(in srgb,var(--faction) 70%,#1b2432); border-radius:12px; box-shadow:0 5px 0 rgba(30,34,40,.12),0 12px 22px rgba(34,40,44,.09); break-inside:avoid; }
-    .card-head { min-height:57px; padding:4px 6px 8px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .card-head-text { min-width:0; }
-    .card-title { margin:0; color:white; font-family:Georgia,serif; font-size:20px; font-weight:700; line-height:1.12; text-shadow:0 1px 2px rgba(0,0,0,.28); overflow-wrap:anywhere; }
-    .card-category { color:rgba(255,255,255,.88); text-transform:uppercase; font-size:9px; font-weight:850; letter-spacing:.14em; margin-top:4px; }
 
-    /* Rank badge (top-left) */
-    .rank { flex-shrink:0; font-family:Georgia,serif; font-size:38px; font-weight:900; line-height:1; letter-spacing:-.03em; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,.45); }
+    /* Interactive Web View Grid (Scales dynamically for previewing 70x50 landscape cards) */
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; align-items:stretch; }
+    
+    /* 70mm x 50mm Landscape Card Base Styles */
+    .card { 
+      --faction:#657e95; 
+      position:relative; 
+      min-width:0; 
+      width:100%;
+      aspect-ratio: 70 / 50; /* Maintains 70x50 mm physical ratio */
+      display:flex; 
+      flex-direction:column; 
+      justify-content:space-between;
+      padding:6px 8px; 
+      background:linear-gradient(158deg,color-mix(in srgb,var(--faction) 85%,white),color-mix(in srgb,var(--faction) 88%,#1f2030)); 
+      border:1px solid color-mix(in srgb,var(--faction) 70%,#1b2432); 
+      border-radius:6px; 
+      box-shadow:0 3px 0 rgba(30,34,40,.12),0 8px 16px rgba(34,40,44,.09); 
+      break-inside:avoid; 
+      overflow:hidden;
+    }
+    
+    .card-head { height:20px; display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:4px; }
+    .card-head-text { min-width:0; flex:1; }
+    .card-title { margin:0; color:white; font-family:Georgia,serif; font-size:13px; font-weight:700; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow:0 1px 2px rgba(0,0,0,.4); }
+    .card-category { color:rgba(255,255,255,.9); text-transform:uppercase; font-size:7px; font-weight:850; letter-spacing:.1em; margin-top:1px; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-    .art { height:174px; display:block; position:relative; border:2px solid rgba(255,255,255,.75); overflow:hidden; border-radius:5px; background:linear-gradient(135deg,#d8d0c3,#a8abae); text-decoration:none; }
+    .rank { flex-shrink:0; font-family:Georgia,serif; font-size:16px; font-weight:900; line-height:1; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+
+    .card-main-content { display:flex; gap:6px; flex:1; min-height:0; }
+    
+    .art { width:38%; height:100%; display:block; position:relative; border:1px solid rgba(255,255,255,.75); overflow:hidden; border-radius:4px; background:linear-gradient(135deg,#d8d0c3,#a8abae); text-decoration:none; flex-shrink:0; }
     .art img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; }
     .art img.tcg-art { object-position:50% 27%; }
     .art img.portrait-art { object-position:50% 25%; }
-    .art-fallback { display:none; position:absolute; inset:0; align-items:center; justify-content:center; color:#49555f; font-size:11px; letter-spacing:.08em; text-transform:uppercase; padding:20px; text-align:center; }
+    .art-fallback { display:none; position:absolute; inset:0; align-items:center; justify-content:center; color:#49555f; font-size:8px; letter-spacing:.05em; text-transform:uppercase; padding:4px; text-align:center; }
     .art.failed img { display:none; }
     .art.failed .art-fallback { display:flex; }
-    .card-body { background:#fffaf0; margin-top:8px; border:1px solid rgba(25,38,46,.20); border-radius:5px; padding:10px 11px 8px; flex:1; display:flex; flex-direction:column; }
-    .type-line { display:flex; align-items:center; justify-content:space-between; gap:6px; min-height:20px; border-bottom:1px solid #ded9cc; padding-bottom:7px; }
-    .type { color:#29394b; font-size:10px; text-transform:uppercase; font-weight:900; letter-spacing:.12em; }
-    .trigger { color:#7c6c54; font-size:9px; text-align:right; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
-    .ability-label { margin:10px 0 3px; color:#9b7251; font-size:9px; text-transform:uppercase; font-weight:900; letter-spacing:.13em; }
-    .ability { margin:0; font-size:13px; line-height:1.35; color:#25313b; overflow-wrap:anywhere; }
-    .target { margin:7px 0 0; font-size:10px; line-height:1.3; color:#7a6959; font-weight:700; }
-    .card-stats { display:flex; justify-content:space-between; align-items:end; padding:9px 4px 2px; color:white; }
-    .stat { min-width:65px; display:flex; gap:7px; align-items:center; text-shadow:0 1px 2px #0007; }
+    
+    .card-body { background:#fffaf0; border:1px solid rgba(25,38,46,.20); border-radius:4px; padding:4px 6px; flex:1; display:flex; flex-direction:column; min-width:0; overflow:hidden; }
+    .type-line { display:flex; align-items:center; justify-content:space-between; gap:4px; border-bottom:1px solid #ded9cc; padding-bottom:2px; margin-bottom:3px; }
+    .type { color:#29394b; font-size:7.5px; text-transform:uppercase; font-weight:900; letter-spacing:.08em; white-space:nowrap; }
+    .trigger { color:#7c6c54; font-size:7px; text-align:right; font-weight:800; letter-spacing:.05em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ability { margin:0; font-size:8.5px; line-height:1.2; color:#25313b; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; flex:1; }
+    .target { margin:2px 0 0; font-size:7px; line-height:1.1; color:#7a6959; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    
+    .card-stats { display:flex; justify-content:space-between; align-items:center; height:16px; padding:0 2px; color:white; margin-top:3px; }
+    .stat { display:flex; gap:3px; align-items:center; text-shadow:0 1px 2px #0007; }
     .stat:last-child { flex-direction:row-reverse; text-align:right; }
-    .stat-icon { font-size:21px; line-height:1; }
-    .stat-label { display:block; font-size:8px; font-weight:900; letter-spacing:.11em; opacity:.85; }
-    .stat-value { display:block; font-size:20px; font-weight:900; line-height:1.03; }
-    .empty { display:none; text-align:center; padding:55px 12px; color:#67737d; }
+    .stat-icon { font-size:11px; line-height:1; }
+    .stat-group { display:flex; align-items:center; gap:2px; }
+    .stat-label { font-size:6.5px; font-weight:900; letter-spacing:.08em; opacity:.85; }
+    .stat-value { font-size:11px; font-weight:900; line-height:1; }
+    
+    .empty { display:none; text-align:center; padding:45px 12px; color:#67737d; }
     .error { display:none; margin:12px 0 0; color:#9e3030; font-size:13px; }
-    .note { color:#778087; font-size:12px; line-height:1.6; margin:29px 0 0; }
-    @media (max-width:650px) { .banner-inner { padding:25px 19px; min-height:145px; } main { padding:20px 17px 45px; } .counter { min-width:78px; padding-left:15px; } .counter strong { font-size:27px; } .grid { grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:14px; } .section-head p { display:none; } }
-    @media (max-width:460px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; } .card { min-height:360px; padding:6px; border-radius:9px; } .card-head { min-height:51px; padding:3px 4px 6px; } .card-title { font-size:16px; } .rank { font-size:28px; } .art { height:120px; } .card-body { padding:7px; margin-top:6px; } .ability { font-size:11px; } .ability-label { margin-top:7px; } .stat-value { font-size:17px; } .stat-icon { font-size:17px; } .stat { min-width:50px; gap:4px; } .toolbar .control.search { flex-basis:100%; } .toolbar .control:not(.search) { flex:1 1 120px; } }
+    .note { color:#778087; font-size:12px; line-height:1.6; margin:25px 0 0; }
+
+    /* Exact Print Rules: 70 x 50 mm Cards fitted onto A4 (3 x 6 Grid = 18 cards per page) */
     @media print {
-      @page { size:A4 portrait; margin:5mm; }
-      html,body { background:white; }
-      .banner,.toolbar,.section-head,.note,.empty,.error { display:none !important; }
-      main { margin:0; padding:0; max-width:none; }
-      .grid { display:grid; grid-template-columns:repeat(3,63mm); gap:3mm; }
-      .card { width:63mm; height:88mm; min-height:88mm; padding:2mm; border-radius:2mm; box-shadow:none; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
-      .card-head { min-height:12mm; padding:0 1mm 1mm; }
-      .card-title { font-size:12pt; }
-      .card-category { font-size:6pt; margin-top:1mm; }
-      .rank { font-size:20pt; text-shadow:none; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
-      .art { height:29mm; border-width:1px; border-radius:1mm; }
-      .card-body { margin-top:1.5mm; padding:1.5mm 2mm; border-radius:1mm; }
-      .type-line { min-height:4mm; padding-bottom:1mm; }
-      .type,.trigger { font-size:6pt; }
-      .ability-label { margin:1mm 0 .5mm; font-size:5.5pt; }
-      .ability { font-size:7.3pt; line-height:1.2; }
-      .target { font-size:6pt; margin-top:1mm; }
-      .card-stats { padding:1mm 1mm 0; }
-      .stat-icon { font-size:12pt; }
-      .stat-value { font-size:12pt; }
-      .stat-label { font-size:5.5pt; }
+      @page { 
+        size: A4 portrait; 
+        margin: 5mm 0mm 5mm 0mm; 
+      }
+      html, body { background: white; margin: 0; padding: 0; }
+      .banner, .toolbar, .section-head, .note, .empty, .error { display: none !important; }
+      main { margin: 0; padding: 0; max-width: none; }
+      
+      .grid { 
+        display: grid !important; 
+        grid-template-columns: repeat(3, 70mm) !important; 
+        grid-auto-rows: 50mm !important;
+        gap: 0mm !important; 
+        justify-content: center !important;
+        align-content: start !important;
+        page-break-after: always;
+      }
+      
+      .card { 
+        width: 70mm !important; 
+        height: 50mm !important; 
+        min-height: 50mm !important; 
+        max-height: 50mm !important;
+        padding: 2mm 2.5mm !important; 
+        border-radius: 1.5mm !important; 
+        box-shadow: none !important; 
+        print-color-adjust: exact !important; 
+        -webkit-print-color-adjust: exact !important; 
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        box-sizing: border-box !important;
+      }
+      
+      .card-head { height: 4.5mm !important; margin-bottom: 1mm !important; }
+      .card-title { font-size: 8.5pt !important; }
+      .card-category { font-size: 5pt !important; margin-top: 0.2mm !important; }
+      .rank { font-size: 11pt !important; text-shadow: none !important; print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; }
+      
+      .card-main-content { gap: 1.5mm !important; height: 35mm !important; }
+      .art { width: 26mm !important; height: 35mm !important; border-width: 0.8pt !important; border-radius: 1mm !important; }
+      .card-body { padding: 1mm 1.5mm !important; border-radius: 1mm !important; height: 35mm !important; }
+      
+      .type-line { min-height: 3mm !important; padding-bottom: 0.5mm !important; margin-bottom: 1mm !important; }
+      .type, .trigger { font-size: 5pt !important; }
+      .ability { font-size: 5.8pt !important; line-height: 1.15 !important; -webkit-line-clamp: 6 !important; }
+      .target { font-size: 5pt !important; margin-top: 0.5mm !important; }
+      
+      .card-stats { height: 3.5mm !important; padding: 0 !important; margin-top: 1mm !important; }
+      .stat-icon { font-size: 7.5pt !important; }
+      .stat-value { font-size: 7.5pt !important; }
+      .stat-label { font-size: 4.5pt !important; }
     }
   </style>
 </head>
 <body>
   <header class="banner">
     <div class="banner-inner">
-      <div><div class="eyebrow">A fan-made card collection</div><h1>One Piece War Cards</h1><p class="subtitle">Characters, tools &amp; strongholds from across the Grand Line.</p></div>
+      <div>
+        <div class="eyebrow">A fan-made card collection</div>
+        <h1>One Piece War Cards</h1>
+        <p class="subtitle">Formatted for 70mm × 50mm landscape printing (18 cards per A4 sheet).</p>
+      </div>
       <div class="counter"><strong id="total">0</strong><span>Cards in deck</span></div>
     </div>
   </header>
@@ -114,10 +176,10 @@
     <div class="section-head"><h2>The collection</h2><p id="results" aria-live="polite"></p></div>
     <div class="grid" id="grid"></div>
     <p class="empty" id="empty">No cards match these filters. Try another search.</p>
-    <p class="note">Card data loads from cards.js and works offline. Images load from their original websites; when offline they show as empty. Cards without a health or damage value show “—”. Cards without a rank show no badge. Select <strong>Load JSON</strong> to display an edited copy of cards.json.</p>
+    <p class="note">Card data loads from <code>cards.js</code> and works offline. Cards measure 70×50 mm and fit 18 cards per A4 printed sheet in a 3×6 layout. Images load from original URLs; when offline they display empty boxes. Select <strong>Load JSON</strong> to load an edited JSON dataset.</p>
   </main>
 
-  <!-- Card data: cards.js must start with  window.CARDS_DATA = {...};  -->
+  <!-- Card data source -->
   <script src="cards.js"></script>
   <script>
     (() => {
@@ -130,11 +192,13 @@
       const categoryMap = () => new Map(data.categories.map(c=>[c.id,c]));
       const rankOf = c => c.rank ? String(c.rank).trim().toUpperCase() : '';
       const filterText = c => [c.name,c.source_name,c.category,c.type,c.ability,c.ability_type,c.target,...(Array.isArray(c.tags)?c.tags:[])].filter(Boolean).join(' ').toLowerCase();
+
       function setupCategories() {
         category.replaceChildren(new Option('All categories',''));
         data.categories.forEach(c=>category.add(new Option(c.name,c.id)));
         byId('total').textContent=data.cards.length;
       }
+
       function stat(label, value, icon) {
         const outer=textEl('div','stat','');
         const symbol=textEl('span','stat-icon',icon); symbol.setAttribute('aria-hidden','true');
@@ -142,25 +206,39 @@
         group.append(textEl('span','stat-label',label),textEl('span','stat-value',value ?? '—'));
         outer.append(symbol,group); return outer;
       }
+
       function makeCard(card, categories) {
         const cat=categories.get(card.category) || {name:card.category || 'Other',color:'#657e95'};
         const root=textEl('article','card','');
         root.style.setProperty('--faction',/^#[0-9a-f]{6}$/i.test(cat.color) ? cat.color : '#657e95');
         const r=rankOf(card);
         root.setAttribute('aria-label',`${card.name}, ${card.type}, ${cat.name}${r ? ', rank ' + r : ''}`);
+        
+        // Header (Title & Category)
         const head=textEl('header','card-head','');
         const headText=textEl('div','card-head-text','');
         headText.append(textEl('h3','card-title',card.name),textEl('div','card-category',cat.name));
         head.append(headText);
+        if(r){
+          const badge=textEl('div','rank',r);
+          badge.dataset.rank=r;
+          badge.setAttribute('aria-label','Rank '+r);
+          head.append(badge);
+        }
+
+        // Main content body (Art left, details right)
+        const mainContent=textEl('div','card-main-content','');
+        
         const art=textEl('a','art','');
         const source=safeURL(card.image_source) || safeURL(card.image_url);
         if(source){art.href=source;art.target='_blank';art.rel='noopener noreferrer';art.setAttribute('aria-label',`View artwork source for ${card.name}`);}
         const img=document.createElement('img'); img.alt=card.name; img.loading='lazy'; img.referrerPolicy='no-referrer';
         if(card.image_style==='tcg') img.classList.add('tcg-art');
         else if(card.type==='character') img.classList.add('portrait-art');
+        
         const imageURL=safeURL(card.image_url);
-        // Offline: skip image requests and leave the art box empty
         if(imageURL && navigator.onLine) img.src=imageURL; else art.classList.add('failed');
+        
         const fallbackURL=safeURL(card.image_fallback_url);
         img.addEventListener('error',()=>{
           if (fallbackURL && img.src!==fallbackURL) {
@@ -171,22 +249,24 @@
           }
           else art.classList.add('failed');
         });
-        art.append(img,textEl('span','art-fallback','Image unavailable'));
+        art.append(img,textEl('span','art-fallback','Image N/A'));
+
         const body=textEl('div','card-body',''), line=textEl('div','type-line','');
         line.append(textEl('span','type',card.type),textEl('span','trigger',card.ability_type ? card.ability_type.replaceAll('_',' ') : ''));
-        body.append(line,textEl('p','ability-label','Ability'),textEl('p','ability',card.ability || '—'));
+        body.append(line,textEl('p','ability',card.ability || '—'));
         if(card.target) body.append(textEl('p','target',`For: ${card.target}`));
-        if(Array.isArray(card.tags) && card.tags.length) body.append(textEl('p','target',`Tags: ${card.tags.join(', ')}`));
-        const stats=textEl('footer','card-stats',''); stats.append(stat('HP',card.health,'♥'),stat('DMG',card.damage,'⚔'));
-        root.append(head,art,body,stats);
-        if(r){
-          const badge=textEl('div','rank',r);
-          badge.dataset.rank=r;
-          badge.setAttribute('aria-label','Rank '+r);
-          head.append(badge);
-        }
+        else if(Array.isArray(card.tags) && card.tags.length) body.append(textEl('p','target',`Tags: ${card.tags.join(', ')}`));
+
+        mainContent.append(art, body);
+
+        // Footer Stats (HP & DMG)
+        const stats=textEl('footer','card-stats',''); 
+        stats.append(stat('HP',card.health,'♥'),stat('DMG',card.damage,'⚔'));
+
+        root.append(head, mainContent, stats);
         return root;
       }
+
       function render() {
         if(!data) return;
         const q=search.value.trim().toLowerCase(), cats=categoryMap();
@@ -195,6 +275,7 @@
         byId('results').textContent=`Showing ${cards.length} of ${data.cards.length} cards`;
         byId('empty').style.display=cards.length ? 'none' : 'block';
       }
+
       const showError = msg => { byId('error').textContent=msg; byId('error').style.display='block'; };
       const validate = d => d && Array.isArray(d.cards) && Array.isArray(d.categories) && d.cards.every(c=>c && typeof c.name==='string' && typeof c.type==='string');
 
@@ -225,7 +306,321 @@
         event.target.value='';
       });
 
-      // Startup: read the cards from cards.js
+      // Startup initialization reading cards.js
+      if (validate(window.CARDS_DATA)) { data = window.CARDS_DATA; setupCategories(); render(); }
+      else showError('Could not load cards.js. Keep it next to this HTML file, or use Load JSON.');
+    })();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One Piece War Cards (70x50mm)</title>
+  <style>
+    :root { color-scheme: light; --ink:#17283a; --muted:#647181; --paper:#f8f5ee; --line:#dedbd2; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button, input, select { font:inherit; }
+    button { cursor:pointer; }
+    
+    /* Screen Banner & Toolbar Header */
+    .banner { color:#f9f6eb; background:radial-gradient(circle at 85% 0%,#30526a 0,transparent 31%),linear-gradient(115deg,#142536,#233a4c); overflow:hidden; }
+    .banner-inner { max-width:1560px; margin:auto; min-height:140px; padding:20px 28px; display:flex; align-items:center; justify-content:space-between; gap:20px; position:relative; }
+    .banner-inner:after { content:'✦'; font-size:140px; line-height:1; color:#fff; opacity:.035; position:absolute; right:15%; top:-30px; pointer-events:none; }
+    .eyebrow { font-size:10px; font-weight:800; letter-spacing:.23em; color:#eacb83; text-transform:uppercase; }
+    h1 { margin:4px 0; font-family:Georgia,serif; font-size:clamp(24px,3.5vw,36px); letter-spacing:-.03em; line-height:1; }
+    .subtitle { margin:0; font-size:13px; color:#c5d0d6; line-height:1.4; }
+    .counter { border-left:1px solid #71818a; padding:2px 0 2px 18px; min-width:100px; }
+    .counter strong { display:block; font-family:Georgia,serif; font-size:30px; font-weight:normal; line-height:1; color:#f3cf83; }
+    .counter span { display:block; color:#c8d0d2; margin-top:5px; font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
+    
+    main { max-width:1560px; margin:auto; padding:20px 28px 45px; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:end; padding-bottom:18px; border-bottom:1px solid var(--line); }
+    .control { display:flex; flex-direction:column; gap:4px; min-width:130px; }
+    .control.search { flex:1 1 240px; }
+    .control label { font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#66737b; }
+    input[type=search],select { height:38px; padding:0 10px; border:1px solid #d8d7d0; border-radius:6px; background:#fffefa; color:#213346; outline:none; font-size:13px; }
+    input[type=search]:focus,select:focus,button:focus-visible,a:focus-visible { outline:3px solid #d9ad56; outline-offset:2px; }
+    .btn { height:38px; border:1px solid #253e50; color:#21384c; background:transparent; border-radius:6px; padding:0 14px; font-weight:750; font-size:12px; white-space:nowrap; }
+    .btn.primary { background:#243d50; color:#fff; }
+    .btn:hover { transform:translateY(-1px); }
+    .btn:active { transform:none; }
+    .section-head { display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin:20px 0 14px; }
+    .section-head h2 { font-family:Georgia,serif; font-weight:normal; font-size:22px; margin:0; letter-spacing:-.02em; }
+    .section-head p { margin:0; color:#737d83; font-size:12px; }
+
+    /* Interactive Web View Grid (Scales dynamically for previewing 70x50 landscape cards) */
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; align-items:stretch; }
+    
+    /* 70mm x 50mm Landscape Card Base Styles */
+    .card { 
+      --faction:#657e95; 
+      position:relative; 
+      min-width:0; 
+      width:100%;
+      aspect-ratio: 70 / 50; /* Maintains 70x50 mm physical ratio */
+      display:flex; 
+      flex-direction:column; 
+      justify-content:space-between;
+      padding:6px 8px; 
+      background:linear-gradient(158deg,color-mix(in srgb,var(--faction) 85%,white),color-mix(in srgb,var(--faction) 88%,#1f2030)); 
+      border:1px solid color-mix(in srgb,var(--faction) 70%,#1b2432); 
+      border-radius:6px; 
+      box-shadow:0 3px 0 rgba(30,34,40,.12),0 8px 16px rgba(34,40,44,.09); 
+      break-inside:avoid; 
+      overflow:hidden;
+    }
+    
+    .card-head { height:20px; display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:4px; }
+    .card-head-text { min-width:0; flex:1; }
+    .card-title { margin:0; color:white; font-family:Georgia,serif; font-size:13px; font-weight:700; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow:0 1px 2px rgba(0,0,0,.4); }
+    .card-category { color:rgba(255,255,255,.9); text-transform:uppercase; font-size:7px; font-weight:850; letter-spacing:.1em; margin-top:1px; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+    .rank { flex-shrink:0; font-family:Georgia,serif; font-size:16px; font-weight:900; line-height:1; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+
+    .card-main-content { display:flex; gap:6px; flex:1; min-height:0; }
+    
+    .art { width:38%; height:100%; display:block; position:relative; border:1px solid rgba(255,255,255,.75); overflow:hidden; border-radius:4px; background:linear-gradient(135deg,#d8d0c3,#a8abae); text-decoration:none; flex-shrink:0; }
+    .art img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; }
+    .art img.tcg-art { object-position:50% 27%; }
+    .art img.portrait-art { object-position:50% 25%; }
+    .art-fallback { display:none; position:absolute; inset:0; align-items:center; justify-content:center; color:#49555f; font-size:8px; letter-spacing:.05em; text-transform:uppercase; padding:4px; text-align:center; }
+    .art.failed img { display:none; }
+    .art.failed .art-fallback { display:flex; }
+    
+    .card-body { background:#fffaf0; border:1px solid rgba(25,38,46,.20); border-radius:4px; padding:4px 6px; flex:1; display:flex; flex-direction:column; min-width:0; overflow:hidden; }
+    .type-line { display:flex; align-items:center; justify-content:space-between; gap:4px; border-bottom:1px solid #ded9cc; padding-bottom:2px; margin-bottom:3px; }
+    .type { color:#29394b; font-size:7.5px; text-transform:uppercase; font-weight:900; letter-spacing:.08em; white-space:nowrap; }
+    .trigger { color:#7c6c54; font-size:7px; text-align:right; font-weight:800; letter-spacing:.05em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .ability { margin:0; font-size:8.5px; line-height:1.2; color:#25313b; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; flex:1; }
+    .target { margin:2px 0 0; font-size:7px; line-height:1.1; color:#7a6959; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    
+    .card-stats { display:flex; justify-content:space-between; align-items:center; height:16px; padding:0 2px; color:white; margin-top:3px; }
+    .stat { display:flex; gap:3px; align-items:center; text-shadow:0 1px 2px #0007; }
+    .stat:last-child { flex-direction:row-reverse; text-align:right; }
+    .stat-icon { font-size:11px; line-height:1; }
+    .stat-group { display:flex; align-items:center; gap:2px; }
+    .stat-label { font-size:6.5px; font-weight:900; letter-spacing:.08em; opacity:.85; }
+    .stat-value { font-size:11px; font-weight:900; line-height:1; }
+    
+    .empty { display:none; text-align:center; padding:45px 12px; color:#67737d; }
+    .error { display:none; margin:12px 0 0; color:#9e3030; font-size:13px; }
+    .note { color:#778087; font-size:12px; line-height:1.6; margin:25px 0 0; }
+
+    /* Exact Print Rules: 70 x 50 mm Cards fitted onto A4 (3 x 6 Grid = 18 cards per page) */
+    @media print {
+      @page { 
+        size: A4 portrait; 
+        margin: 5mm 0mm 5mm 0mm; 
+      }
+      html, body { background: white; margin: 0; padding: 0; }
+      .banner, .toolbar, .section-head, .note, .empty, .error { display: none !important; }
+      main { margin: 0; padding: 0; max-width: none; }
+      
+      .grid { 
+        display: grid !important; 
+        grid-template-columns: repeat(3, 70mm) !important; 
+        grid-auto-rows: 50mm !important;
+        gap: 0mm !important; 
+        justify-content: center !important;
+        align-content: start !important;
+        page-break-after: always;
+      }
+      
+      .card { 
+        width: 70mm !important; 
+        height: 50mm !important; 
+        min-height: 50mm !important; 
+        max-height: 50mm !important;
+        padding: 2mm 2.5mm !important; 
+        border-radius: 1.5mm !important; 
+        box-shadow: none !important; 
+        print-color-adjust: exact !important; 
+        -webkit-print-color-adjust: exact !important; 
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        box-sizing: border-box !important;
+      }
+      
+      .card-head { height: 4.5mm !important; margin-bottom: 1mm !important; }
+      .card-title { font-size: 8.5pt !important; }
+      .card-category { font-size: 5pt !important; margin-top: 0.2mm !important; }
+      .rank { font-size: 11pt !important; text-shadow: none !important; print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; }
+      
+      .card-main-content { gap: 1.5mm !important; height: 35mm !important; }
+      .art { width: 26mm !important; height: 35mm !important; border-width: 0.8pt !important; border-radius: 1mm !important; }
+      .card-body { padding: 1mm 1.5mm !important; border-radius: 1mm !important; height: 35mm !important; }
+      
+      .type-line { min-height: 3mm !important; padding-bottom: 0.5mm !important; margin-bottom: 1mm !important; }
+      .type, .trigger { font-size: 5pt !important; }
+      .ability { font-size: 5.8pt !important; line-height: 1.15 !important; -webkit-line-clamp: 6 !important; }
+      .target { font-size: 5pt !important; margin-top: 0.5mm !important; }
+      
+      .card-stats { height: 3.5mm !important; padding: 0 !important; margin-top: 1mm !important; }
+      .stat-icon { font-size: 7.5pt !important; }
+      .stat-value { font-size: 7.5pt !important; }
+      .stat-label { font-size: 4.5pt !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="banner">
+    <div class="banner-inner">
+      <div>
+        <div class="eyebrow">A fan-made card collection</div>
+        <h1>One Piece War Cards</h1>
+        <p class="subtitle">Formatted for 70mm × 50mm landscape printing (18 cards per A4 sheet).</p>
+      </div>
+      <div class="counter"><strong id="total">0</strong><span>Cards in deck</span></div>
+    </div>
+  </header>
+  <main>
+    <div class="toolbar" aria-label="Card controls">
+      <div class="control search"><label for="search">Search cards</label><input type="search" id="search" placeholder="Search a name or ability…" autocomplete="off"></div>
+      <div class="control"><label for="category">Category</label><select id="category"><option value="">All categories</option></select></div>
+      <div class="control"><label for="type">Card type</label><select id="type"><option value="">All types</option><option value="character">Character</option><option value="tool">Tool</option><option value="building">Building</option></select></div>
+      <div class="control"><label for="rank">Rank</label><select id="rank"><option value="">All ranks</option><option>SSS</option><option>SS</option><option>S+</option><option>S</option><option>A</option><option>B</option><option>C</option><option>D</option><option>F</option></select></div>
+      <button type="button" class="btn" id="load">Load JSON</button>
+      <input id="json-file" type="file" accept=".json,application/json" hidden>
+      <button type="button" class="btn primary" id="print">Print cards</button>
+    </div>
+    <p id="error" class="error" role="alert"></p>
+    <div class="section-head"><h2>The collection</h2><p id="results" aria-live="polite"></p></div>
+    <div class="grid" id="grid"></div>
+    <p class="empty" id="empty">No cards match these filters. Try another search.</p>
+    <p class="note">Card data loads from <code>cards.js</code> and works offline. Cards measure 70×50 mm and fit 18 cards per A4 printed sheet in a 3×6 layout. Images load from original URLs; when offline they display empty boxes. Select <strong>Load JSON</strong> to load an edited JSON dataset.</p>
+  </main>
+
+  <!-- Card data source -->
+  <script src="cards.js"></script>
+  <script>
+    (() => {
+      'use strict';
+      let data = null;
+      const byId = id => document.getElementById(id);
+      const grid = byId('grid'), search = byId('search'), category = byId('category'), type = byId('type'), rank = byId('rank');
+      const textEl = (tag, cls, text) => { const el=document.createElement(tag); el.className=cls; el.textContent=text; return el; };
+      const safeURL = value => { try { const u=new URL(value); return u.protocol==='https:' || u.protocol==='http:' ? u.href : ''; } catch { return ''; } };
+      const categoryMap = () => new Map(data.categories.map(c=>[c.id,c]));
+      const rankOf = c => c.rank ? String(c.rank).trim().toUpperCase() : '';
+      const filterText = c => [c.name,c.source_name,c.category,c.type,c.ability,c.ability_type,c.target,...(Array.isArray(c.tags)?c.tags:[])].filter(Boolean).join(' ').toLowerCase();
+
+      function setupCategories() {
+        category.replaceChildren(new Option('All categories',''));
+        data.categories.forEach(c=>category.add(new Option(c.name,c.id)));
+        byId('total').textContent=data.cards.length;
+      }
+
+      function stat(label, value, icon) {
+        const outer=textEl('div','stat','');
+        const symbol=textEl('span','stat-icon',icon); symbol.setAttribute('aria-hidden','true');
+        const group=textEl('span','stat-group','');
+        group.append(textEl('span','stat-label',label),textEl('span','stat-value',value ?? '—'));
+        outer.append(symbol,group); return outer;
+      }
+
+      function makeCard(card, categories) {
+        const cat=categories.get(card.category) || {name:card.category || 'Other',color:'#657e95'};
+        const root=textEl('article','card','');
+        root.style.setProperty('--faction',/^#[0-9a-f]{6}$/i.test(cat.color) ? cat.color : '#657e95');
+        const r=rankOf(card);
+        root.setAttribute('aria-label',`${card.name}, ${card.type}, ${cat.name}${r ? ', rank ' + r : ''}`);
+        
+        // Header (Title & Category)
+        const head=textEl('header','card-head','');
+        const headText=textEl('div','card-head-text','');
+        headText.append(textEl('h3','card-title',card.name),textEl('div','card-category',cat.name));
+        head.append(headText);
+        if(r){
+          const badge=textEl('div','rank',r);
+          badge.dataset.rank=r;
+          badge.setAttribute('aria-label','Rank '+r);
+          head.append(badge);
+        }
+
+        // Main content body (Art left, details right)
+        const mainContent=textEl('div','card-main-content','');
+        
+        const art=textEl('a','art','');
+        const source=safeURL(card.image_source) || safeURL(card.image_url);
+        if(source){art.href=source;art.target='_blank';art.rel='noopener noreferrer';art.setAttribute('aria-label',`View artwork source for ${card.name}`);}
+        const img=document.createElement('img'); img.alt=card.name; img.loading='lazy'; img.referrerPolicy='no-referrer';
+        if(card.image_style==='tcg') img.classList.add('tcg-art');
+        else if(card.type==='character') img.classList.add('portrait-art');
+        
+        const imageURL=safeURL(card.image_url);
+        if(imageURL && navigator.onLine) img.src=imageURL; else art.classList.add('failed');
+        
+        const fallbackURL=safeURL(card.image_fallback_url);
+        img.addEventListener('error',()=>{
+          if (fallbackURL && img.src!==fallbackURL) {
+            img.src=fallbackURL;
+            if (/onepiecedb\.io|limitlesstcg\.nyc3\.cdn/i.test(fallbackURL)) { img.classList.remove('portrait-art'); img.classList.add('tcg-art'); }
+            const fallbackSource=safeURL(card.image_fallback_source);
+            if(fallbackSource) art.href=fallbackSource;
+          }
+          else art.classList.add('failed');
+        });
+        art.append(img,textEl('span','art-fallback','Image N/A'));
+
+        const body=textEl('div','card-body',''), line=textEl('div','type-line','');
+        line.append(textEl('span','type',card.type),textEl('span','trigger',card.ability_type ? card.ability_type.replaceAll('_',' ') : ''));
+        body.append(line,textEl('p','ability',card.ability || '—'));
+        if(card.target) body.append(textEl('p','target',`For: ${card.target}`));
+        else if(Array.isArray(card.tags) && card.tags.length) body.append(textEl('p','target',`Tags: ${card.tags.join(', ')}`));
+
+        mainContent.append(art, body);
+
+        // Footer Stats (HP & DMG)
+        const stats=textEl('footer','card-stats',''); 
+        stats.append(stat('HP',card.health,'♥'),stat('DMG',card.damage,'⚔'));
+
+        root.append(head, mainContent, stats);
+        return root;
+      }
+
+      function render() {
+        if(!data) return;
+        const q=search.value.trim().toLowerCase(), cats=categoryMap();
+        const cards=data.cards.filter(c=>(!q || filterText(c).includes(q) || rankOf(c).toLowerCase()===q) && (!category.value || c.category===category.value) && (!type.value || c.type===type.value) && (!rank.value || rankOf(c)===rank.value));
+        const nodes=document.createDocumentFragment(); cards.forEach(c=>nodes.append(makeCard(c,cats))); grid.replaceChildren(nodes);
+        byId('results').textContent=`Showing ${cards.length} of ${data.cards.length} cards`;
+        byId('empty').style.display=cards.length ? 'none' : 'block';
+      }
+
+      const showError = msg => { byId('error').textContent=msg; byId('error').style.display='block'; };
+      const validate = d => d && Array.isArray(d.cards) && Array.isArray(d.categories) && d.cards.every(c=>c && typeof c.name==='string' && typeof c.type==='string');
+
+      search.addEventListener('input',render); category.addEventListener('change',render); type.addEventListener('change',render); rank.addEventListener('change',render);
+
+      byId('print').addEventListener('click',async()=>{
+        const button=byId('print'), all=[...grid.querySelectorAll('img')];
+        button.textContent='Preparing…'; button.disabled=true;
+        all.forEach(img=>{ img.loading='eager'; });
+        const ready=all.map(img=>new Promise(resolve=>{
+          if((img.complete && img.naturalWidth>0) || img.closest('.art').classList.contains('failed')) return resolve();
+          img.addEventListener('load',resolve,{once:true});
+          img.addEventListener('error',()=>{ if(img.closest('.art').classList.contains('failed')) resolve(); });
+        }));
+        await Promise.race([Promise.all(ready),new Promise(resolve=>setTimeout(resolve,8000))]);
+        button.disabled=false; button.textContent='Print cards'; window.print();
+      });
+
+      byId('load').addEventListener('click',()=>byId('json-file').click());
+      byId('json-file').addEventListener('change',async event=>{
+        const file=event.target.files[0]; if(!file) return;
+        try {
+          const candidate=JSON.parse(await file.text());
+          if(!validate(candidate)) throw new Error('Expected categories and cards arrays with card names and types.');
+          data=candidate; search.value=''; type.value=''; rank.value=''; setupCategories(); render();
+          byId('error').style.display='none';
+        } catch(error) { showError(`Could not load JSON: ${error.message}`); }
+        event.target.value='';
+      });
+
+      // Startup initialization reading cards.js
       if (validate(window.CARDS_DATA)) { data = window.CARDS_DATA; setupCategories(); render(); }
       else showError('Could not load cards.js. Keep it next to this HTML file, or use Load JSON.');
     })();
